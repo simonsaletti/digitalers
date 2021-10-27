@@ -1,0 +1,1 @@
+INSERT INTO productos (descripcion, precio, stock) VALUES ("Hamburguesa", 5.50, 10), ("Vino", 7.50, 2);
