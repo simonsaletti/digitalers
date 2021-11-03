@@ -2,64 +2,52 @@ package com.digitalers.spring.boot.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "productos")
+@Data
+@NoArgsConstructor
 public class Producto implements Serializable {
 
 	private static final long serialVersionUID = 3006480524381487863L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
 	private Long id;
 
-	@Column(name = "descripcion")
 	private String descripcion;
 
-	@Column(name = "precio")
 	private BigDecimal precio;
 
-	@Column(name = "stock")
 	private Long stock;
 
-	public Long getId() {
-		return id;
-	}
+	@Column(name = "fecha_creacion")
+	private LocalDate fechaCreacion;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	private String URLImagen;
 
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
+	public Producto(String descripcion, BigDecimal precio, Long stock, String URLImagen) {
 		this.descripcion = descripcion;
-	}
-
-	public BigDecimal getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
-	}
-
-	public Long getStock() {
-		return stock;
-	}
-
-	public void setStock(Long stock) {
 		this.stock = stock;
+		this.URLImagen = URLImagen;
+	}
+
+	@PrePersist
+	public void guardar() {
+		this.fechaCreacion = LocalDate.now();
 	}
 
 }
